@@ -4,11 +4,8 @@ const messageParser = () => {
     console.log("Called Message Parser");
 }
 
-// Connect to the WebSocket server
-WebSocketClient.connect();
-WebSocketClient.setParser(messageParser)
+let ws = new WebSocketClient("ws://localhost:7890", messageParser)
 
-// Send a message after a short delay to ensure connection is established
 setTimeout(() => {
-  WebSocketClient.sendMessage('Hello from the static class!');
+  ws.sendMessage('I want 10 pizzas');
 }, 1000);

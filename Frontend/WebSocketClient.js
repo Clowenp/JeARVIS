@@ -2,12 +2,14 @@ const WebSocket = require('ws');
 
 class WebSocketClient {
 
-  static isConnected = false;
+  constructor(url, parserFunction) {
+    this.isConnected = false;
+    this.socket = new WebSocket(url);
+    this.connect(url)
+    this.setParser(parserFunction)
+  }
 
-  static socket = null;
-  static parser = null;
-
-  static setParser(parserFunction) {
+  setParser(parserFunction) {
     if (typeof parserFunction === 'function') {
       this.parser = parserFunction;
     } else {
@@ -15,8 +17,7 @@ class WebSocketClient {
     }
   }
 
-  static connect(url = 'ws://localhost:7890') {
-    this.socket = new WebSocket(url);
+  connect(url = 'ws://localhost:7890') {
 
     this.socket.on('open', () => {
       console.log('Connected to WebSocket server');
@@ -48,7 +49,7 @@ class WebSocketClient {
     });
   }
 
-  static sendMessage(message) {
+  sendMessage(message) {
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       this.socket.send(message);
     } else {
@@ -56,7 +57,7 @@ class WebSocketClient {
     }
   }
 
-  static close() {
+  close() {
     if (this.socket) {
       this.socket.close();
     }
