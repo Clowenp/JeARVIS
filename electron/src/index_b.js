@@ -42,10 +42,10 @@ iohook.on('mousemove', (event) => {
   console.log('Mouse move event:', event);
 });
 
-iohook.on('mousedown', (event) => {
-  console.log('Mouse down event:', event);
-  mainWindow.webContents.send('mouse-pressed', event); // Send IPC message
-});
+// iohook.on('mousedown', (event) => {
+//   console.log('Mouse down event:', event);
+  //mainWindow.webContents.send('mouse-pressed', event); // Send IPC message
+// });
 
 // Add keypress detection
 iohook.on('keydown', (event) => {
@@ -57,8 +57,16 @@ iohook.on('keydown', (event) => {
 });
 
 iohook.on('keyup', (event) => {
-  console.log('Key up event:', event);
+  // Trigger 'Reaction' animation in Unity
+  sendMessageToUnity('AnimationController', 'TriggerAnimation', 'Reaction');
 });
+iohook.on('mousedown', (event) => {
+  console.log('Mouse down event detected:', event);
+  
+  // Trigger 'dying' animation in Unity
+  sendMessageToUnity('AnimationController', 'TriggerAnimation', 'Dying');
+});
+
 
 // Function to take a screenshot
 const takeScreenshot = () => {
