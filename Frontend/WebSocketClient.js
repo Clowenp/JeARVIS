@@ -1,12 +1,11 @@
 const WebSocket = require('ws');
 
 class WebSocketClient {
-
   constructor(url, parserFunction) {
     this.isConnected = false;
-    this.socket = new WebSocket(url);
-    this.connect(url)
-    this.setParser(parserFunction)
+    this.url = url;
+    this.setParser(parserFunction);
+    this.connect();
   }
 
   setParser(parserFunction) {
@@ -17,7 +16,8 @@ class WebSocketClient {
     }
   }
 
-  connect(url = 'ws://localhost:7890') {
+  connect() {
+    this.socket = new WebSocket(this.url);
 
     this.socket.on('open', () => {
       console.log('Connected to WebSocket server');
@@ -26,13 +26,14 @@ class WebSocketClient {
     });
 
     this.socket.on('message', (data) => {
-      console.log(data.toString());
+      const message = data.toString();
+      console.log('Received message:', message);
       if (this.parser) {
         try {
-          this.parser(data.toString())
-          console.log("Parsed Message: " + data.toString())
+          this.parser(message);
+          console.log("Message parsed successfully");
         } catch (error) {
-          console.error("Error Running Message Parser: " + data.toString())
+          console.error("Error Running Message Parser: ", error)
         }
       } else {
         console.log("No Parser Found!")
