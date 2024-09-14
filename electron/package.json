@@ -18,7 +18,8 @@
     "@electron-forge/maker-zip": "^7.4.0",
     "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
     "@electron-forge/plugin-fuses": "^7.4.0",
-    "@electron/fuses": "^1.8.0"
+    "@electron/fuses": "^1.8.0",
+    "electron-rebuild": "^3.2.9"
   },
   "keywords": [],
   "author": {
@@ -29,7 +30,6 @@
   "dependencies": {
     "autoprefixer": "^10.4.20",
     "electron": "^12.2.3",
-    "electron-rebuild": "^3.2.9",
     "electron-squirrel-startup": "^1.0.1",
     "iohook": "^0.9.3",
     "pngjs": "^7.0.0",
