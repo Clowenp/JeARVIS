@@ -1,19 +1,22 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const iohook = require('iohook');
 const robot = require('robotjs');
 const fs = require('fs');
 const { PNG } = require('pngjs');
 
+
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+let mainWindow; //declare outside function so its accesible in even handlers
 
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1200,
     height: 1200,
     frame: false, // Hide window frame
@@ -41,6 +44,7 @@ iohook.on('mousemove', (event) => {
 
 iohook.on('mousedown', (event) => {
   console.log('Mouse down event:', event);
+  mainWindow.webContents.send('mouse-pressed', event); // Send IPC message
 });
 
 // Add keypress detection
