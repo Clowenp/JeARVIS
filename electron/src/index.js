@@ -1,5 +1,7 @@
 const { app, BrowserWindow } = require('electron');
-const path = require('node:path');
+const path = require('path');
+const iohook = require('iohook');
+const robot = require('robotjs');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -27,7 +29,7 @@ const createWindow = () => {
   //mainWindow.setIgnoreMouseEvents(true, { forward: true });
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
