@@ -22,8 +22,8 @@
   },
   "keywords": [],
   "author": {
-    "name": "joshua-hill",
-    "email": "joshua.hill098765@gmail.com"
+    "name": "Bill Wang",
+    "email": "billwang7599@gmail.com"
   },
   "license": "MIT",
   "dependencies": {
@@ -35,7 +35,7 @@
     "pngjs": "^7.0.0",
     "postcss": "^8.4.47",
     "robotjs": "^0.6.0",
-    "tailwindcss": "^3.4.11"
+    "ws": "^8.12.0"
   },
   "iohook": {
     "targets": [
