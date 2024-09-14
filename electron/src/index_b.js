@@ -34,69 +34,91 @@ const createWindow = () => {
   //mainWindow.webContents.openDevTools();
 };
 
-// Add keypress detection
-iohook.on('mousemove', (event) => {
-  console.log('Mouse move event:', event);
-});
-
-iohook.on('mousedown', (event) => {
-  console.log('Mouse down event:', event);
-});
-
-// Add keypress detection
-iohook.on('keydown', (event) => {
-  console.log('Key down event:', event);
-  if (event.keycode === 31) {
-    console.log('Taking screenshot');
-    takeScreenshot();
+class EventListener {
+  constructor() {
+    this.iohook = require('iohook');
+    this.robot = require('robotjs');
+    this.fs = require('fs').promises; // Use promises for async file operations
+    this.path = require('path');
+    this.PNG = require('pngjs').PNG;
   }
-});
 
-iohook.on('keyup', (event) => {
-  console.log('Key up event:', event);
-});
+  start() {
+    this.iohook.on('mousemove', this.onMouseMove);
+    this.iohook.on('mousedown', this.onMouseDown);
+    this.iohook.on('keydown', this.onKeyDown.bind(this));
+    this.iohook.on('keyup', this.onKeyUp);
+    this.iohook.start();
+  }
 
-// Function to take a screenshot
-const takeScreenshot = () => {
-  const screenshot = robot.screen.capture();
-  const { width, height, image } = screenshot;
-  const png = new PNG({ width, height });
+  onMouseMove(event) {
+    console.log('Mouse move event:', event);
+  }
 
-  for (let y = 0; y < height; y++) {
-    for (let x = 0; x < width; x++) {
-      const idx = (width * y + x) * 4;
-      const r = image[idx];
-      const g = image[idx + 1];
-      const b = image[idx + 2];
-      const a = image[idx + 3];
-      const pngIdx = (png.width * y + x) << 2;
+  onMouseDown(event) {
+    console.log('Mouse down event:', event);
+  }
 
-      png.data[pngIdx] = r;
-      png.data[pngIdx + 1] = g;
-      png.data[pngIdx + 2] = b;
-      png.data[pngIdx + 3] = a;
+  onKeyDown(event) {
+    console.log('Key down event:', event);
+    if (event.keycode === 31) {
+      this.takeScreenshot();
     }
   }
 
-  const filePath = path.join(__dirname, `screenshot-${Date.now()}.png`);
-  png.pack().pipe(fs.createWriteStream(filePath)).on('finish', () => {
-    console.log(`Screenshot saved to ${filePath}`);
-  });
-};
+  onKeyUp(event) {
+    console.log('Key up event:', event);
+  }
+
+  async takeScreenshot() {
+    console.log('Taking screenshot');
+    const screenshot = this.robot.screen.capture();
+    const { width, height, image } = screenshot;
+    const png = new this.PNG({ width, height });
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const idx = (width * y + x) * 4;
+        const r = image[idx];
+        const g = image[idx + 1];
+        const b = image[idx + 2];
+        const a = image[idx + 3];
+        const pngIdx = (png.width * y + x) << 2;
+
+        png.data[pngIdx] = r;
+        png.data[pngIdx + 1] = g;
+        png.data[pngIdx + 2] = b;
+        png.data[pngIdx + 3] = a;
+      }
+    }
+
+    const filePath = this.path.join(__dirname, `../screenshots/screenshot-${Date.now()}.png`);
+    png.pack().pipe(this.fs.createWriteStream(filePath))
+      .on('finish', () => {
+        console.log(`Screenshot saved to ${filePath}`);
+      })
+      .on('error', (err) => {
+        console.error('Error saving screenshot:', err);
+      });
+  }
+}
 
 // Start iohook to begin capturing events
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+
+
 app.whenReady().then(() => {
   console.log('Initalizing window');
   createWindow();
   console.log('Window created');
 
-  console.log('Starting iohook');
-  iohook.start();
-  console.log('iohook started');
+  console.log('Starting event listener');
+  const eventListener = new EventListener();
+  eventListener.start();
+  console.log('Event listener started');
 
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
