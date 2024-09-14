@@ -2,6 +2,7 @@ import websockets
 import asyncio
 from dotenv import load_dotenv
 import os
+from controller import Controller
 
 def begin_server():
     load_dotenv()
@@ -13,7 +14,8 @@ def begin_server():
         try:
             async for message in websocket:
                 print("Recieved message from client: " + message)
-                await websocket.send("Message from Server: " + message)
+                message = Controller.parse_message(message)
+                await websocket.send(message + " [Message Sent Back from Server]")
         except websockets.exceptions.ConnectionClosed as e:
             print("Client Disconnected")
             print(e)

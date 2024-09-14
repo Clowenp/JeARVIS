@@ -1,0 +1,54 @@
+{
+  "name": "test-the-north",
+  "productName": "test-the-north",
+  "version": "1.0.0",
+  "description": "My Electron application description",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\""
+  },
+  "devDependencies": {
+    "@electron-forge/maker-deb": "^7.4.0",
+    "@electron-forge/maker-rpm": "^7.4.0",
+    "@electron-forge/maker-squirrel": "^7.4.0",
+    "@electron-forge/maker-zip": "^7.4.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
+    "@electron-forge/plugin-fuses": "^7.4.0",
+    "@electron/fuses": "^1.8.0"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Bill Wang",
+    "email": "billwang7599@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer": "^10.4.20",
+    "electron": "^12.2.3",
+    "electron-rebuild": "^3.2.9",
+    "electron-squirrel-startup": "^1.0.1",
+    "iohook": "^0.9.3",
+    "pngjs": "^7.0.0",
+    "postcss": "^8.4.47",
+    "robotjs": "^0.6.0",
+    "ws": "^8.12.0"
+  },
+  "iohook": {
+    "targets": [
+      "node-83",
+      "electron-87"
+    ],
+    "platforms": [
+      "win32",
+      "darwin",
+      "linux"
+    ],
+    "arches": [
+      "x64"
+    ]
+  }
+}

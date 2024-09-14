@@ -120,6 +120,8 @@
                 fullscreenButton.onclick = () => {
                   unityInstance.SetFullscreen(1);
                 };
+                window.unityInstance = unityInstance;
+                window.parent.unityInstance = unityInstance; // Expose to parent window
               }).catch((message) => {
                 alert(message);
               });
