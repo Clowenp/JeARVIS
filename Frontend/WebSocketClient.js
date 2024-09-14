@@ -22,7 +22,7 @@ class WebSocketClient {
     this.socket.on('open', () => {
       console.log('Connected to WebSocket server');
       this.isConnected = true;
-      this.socket.send('Hello Server!');
+      this.socket.send(JSON.stringify({"message": "connect"}));
     });
 
     this.socket.on('message', (data) => {
