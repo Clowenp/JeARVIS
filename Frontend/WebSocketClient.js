@@ -2,6 +2,7 @@ const WebSocket = require('ws');
 
 class WebSocketClient {
   constructor(url, parserFunction) {
+    this.socket = null;
     this.isConnected = false;
     this.url = url;
     this.setParser(parserFunction);
