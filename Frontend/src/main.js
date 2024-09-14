@@ -78,7 +78,7 @@ const takeScreenshot = () => {
     }
   }
 
-  const filePath = path.join(__dirname, `screenshot-${Date.now()}.png`);
+  const filePath = path.join(__dirname, `../screenshots/screenshot-${Date.now()}.png`);
   png.pack().pipe(fs.createWriteStream(filePath)).on('finish', () => {
     console.log(`Screenshot saved to ${filePath}`);
   });
