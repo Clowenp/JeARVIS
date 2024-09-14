@@ -1,9 +1,5 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
-const iohook = require('iohook');
-const robot = require('robotjs');
-const fs = require('fs');
-const { PNG } = require('pngjs');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -14,10 +10,10 @@ if (require('electron-squirrel-startup')) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    frame: false, // Hide window frame
-    transparent: true, // Make window transparent
+    width: 400,
+    height: 400,
+    frame: true, // Hide window frame
+    transparent: false, // Make window transparent
     alwaysOnTop: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -28,19 +24,31 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index1.html'));
-  // win.setIgnoreMouseEvents(true, { forward: true });
-
-  // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
 };
 
+// WebSocket Class 
+class WebSocketClient {
+  constructor(url, messageParser) {
+    const WebSocketClient = require('./WebSocketClient');
+    this.url = url;
+    this.ws = new WebSocketClient(url, messageParser);
+  }
+
+  sendMessage(message) {
+    this.ws.sendMessage(message);
+  }
+}
+
+// Event Listener Class
 class EventListener {
   constructor() {
     this.iohook = require('iohook');
     this.robot = require('robotjs');
-    this.fs = require('fs').promises; // Use promises for async file operations
+    this.fs = require('fs'); // Use promises for async file operations
     this.path = require('path');
     this.PNG = require('pngjs').PNG;
+    this.keyInputs = ''; // Initialize an empty string to store key inputs
+    this.ws = new WebSocketClient('ws://localhost:8080', this.onMessage.bind(this));
   }
 
   start() {
@@ -51,18 +59,34 @@ class EventListener {
     this.iohook.start();
   }
 
-  onMouseMove(event) {
+  // Define the onMessage method
+  onMessage(message) {
+    console.log('Received message:', message);
+  }
+
+  async onMouseMove(event) {
     console.log('Mouse move event:', event);
   }
 
-  onMouseDown(event) {
+  async onMouseDown(event) {
     console.log('Mouse down event:', event);
   }
 
-  onKeyDown(event) {
+  async onKeyDown(event) {
     console.log('Key down event:', event);
+    // Convert keycode to character and append to keyInputs
+    const char = String.fromCharCode(event.rawcode);
+    this.keyInputs += char;
+
+    // On enter, send the message to the backend and clear the key inputs
+    if (event.keycode === 28) { // 28 is the keycode for Enter
+      console.log('Key inputs before Enter:', this.keyInputs);
+      this.ws.sendMessage(this.keyInputs);
+      this.keyInputs = ''; // Clear the key inputs
+    }
+
     if (event.keycode === 31) {
-      this.takeScreenshot();
+      await this.takeScreenshot();
     }
   }
 
@@ -92,7 +116,7 @@ class EventListener {
       }
     }
 
-    const filePath = this.path.join(__dirname, `../screenshots/screenshot-${Date.now()}.png`);
+    const filePath = this.path.join(__dirname, `../screenshots/screenshot-${Date.now()}-${Math.random().toString(36).substring(7)}.png`);
     png.pack().pipe(this.fs.createWriteStream(filePath))
       .on('finish', () => {
         console.log(`Screenshot saved to ${filePath}`);
