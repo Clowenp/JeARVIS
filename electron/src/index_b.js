@@ -58,13 +58,13 @@ iohook.on('keydown', (event) => {
 
 iohook.on('keyup', (event) => {
   // Trigger 'Reaction' animation in Unity
-  sendMessageToUnity('AnimationController', 'TriggerAnimation', 'Reaction');
+  mainWindow.webContents.send('Reaction', event);
 });
 iohook.on('mousedown', (event) => {
   console.log('Mouse down event detected:', event);
   
   // Trigger 'dying' animation in Unity
-  sendMessageToUnity('AnimationController', 'TriggerAnimation', 'Dying');
+  mainWindow.webContents.send('Dying', event);
 });
 
 

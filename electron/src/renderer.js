@@ -10,7 +10,12 @@ window.addEventListener('DOMContentLoaded', () => {
   window.electronAPI.onMousePressed((event, data) => {
     console.log('Mouse pressed event received in renderer:', data);
     // Send message to Unity
-    sendMessageToUnity('Cube', 'ChangeAnimation', '');
+    sendMessageToUnity('Cube', 'ChangeAnimation', 'Reaction');
+  });
+  window.addEventListener('keydown', (event) => {
+    console.log('Key down event detected! ');
+    // You can send a message to Unity here when a key is pressed
+    sendMessageToUnity('Cube', 'KeyPressed', 'Dying');
   });
 });
 
