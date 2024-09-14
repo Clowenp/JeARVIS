@@ -14,8 +14,8 @@ if (require('electron-squirrel-startup')) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 1200,
     frame: false, // Hide window frame
     transparent: true, // Make window transparent
     alwaysOnTop: true,
@@ -27,7 +27,7 @@ const createWindow = () => {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'index1.html'));
+  mainWindow.loadFile(path.join(__dirname, 'index.html'));
   // win.setIgnoreMouseEvents(true, { forward: true });
 
   // Open the DevTools.
