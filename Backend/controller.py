@@ -26,4 +26,4 @@ class Controller:
     
     @staticmethod
     def voice():
-        VoiceToText.voice_to_text()
+        return VoiceToText.voice_to_text()

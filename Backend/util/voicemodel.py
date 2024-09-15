@@ -18,5 +18,5 @@ class VoiceModel:
 
     def get_text_translation(self):
         translation_text = self.audio_to_text()
-        print(translation_text)
+        print("get_text_translation(): " + translation_text)
         return translation_text
