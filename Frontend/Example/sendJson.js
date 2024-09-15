@@ -1,4 +1,4 @@
-const WebSocketClient = require('../WebSocketClient');
+const WebSocketClient = require('../src/objects/WebSocketClient');
 
 const messageParser = (message) => {
     console.log("messageParser, " + message);
@@ -6,10 +6,10 @@ const messageParser = (message) => {
 
 let ws = new WebSocketClient("ws://localhost:7890", messageParser)
 
-// setTimeout(() => {
-//   ws.sendMessage(JSON.stringify({"message": "screenshot"}));
-// }, 1000);
+setTimeout(() => {
+  ws.sendMessage(JSON.stringify({"message": "screenshot"}));
+}, 1000);
 
 setTimeout(() => {
   ws.sendMessage(JSON.stringify({"message": "voice"}));
-}, 4000);
+}, 5000);
