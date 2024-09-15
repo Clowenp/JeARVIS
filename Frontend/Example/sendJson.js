@@ -1,4 +1,4 @@
-const WebSocketClient = require('../WebSocketClient');
+const WebSocketClient = require('../src/objects/WebSocketClient');
 
 const messageParser = (message) => {
     console.log("messageParser, " + message);
