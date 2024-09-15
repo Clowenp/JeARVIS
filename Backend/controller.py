@@ -1,8 +1,12 @@
 import json
 from util.productivity import Productivity
 from util.voicetotext import VoiceToText
+from util.texttospeech import TextToSpeech
+from util.playaudio import AudioPlayer
 
 class Controller:
+
+    tts1 = TextToSpeech()
 
     @staticmethod
     def parse_message(message):
@@ -26,4 +30,7 @@ class Controller:
     
     @staticmethod
     def voice():
-        return VoiceToText.voice_to_text()
+        txt = VoiceToText.voice_to_text()
+        Controller.tts1.get_speech_response(txt);
+        AudioPlayer.play_wav("util/Audio/uberduck.wav")
+        return txt
