@@ -4,6 +4,7 @@ import base64
 from IPython.display import Image
 from util.voiceflow import Voiceflow
 import json
+from util.screenshot import Screenshot
 
 class Productivity:
     total = 0
@@ -37,13 +38,13 @@ class Productivity:
     
     @staticmethod
     def run_productivity():
+        Screenshot.capture_and_save()
         result = Productivity.rate_productivity()
+        print("=== Result ===")
         print(result)
         
         children = json.loads(Productivity.number_extractor(result))
         children = children[1]["payload"]["slate"]["content"][0]["children"]
-        print("=== children ===")
-        print(children)
         for child in children:
             if (child["text"] >= '1' and child["text"] <= '9') or child["text"] == '10':
                 return child["text"]

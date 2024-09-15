@@ -18,7 +18,7 @@ class Screenshot:
         return img_byte_arr
 
     @staticmethod
-    def save_screenshot(img_bytes, filename='Screenshots/screenshot.png'):
+    def save_screenshot(img_bytes, filename='util/Screenshots/screenshot.png'):
         print("save screenshot")
         img = Image.open(io.BytesIO(img_bytes))
         img.save(filename) # save
