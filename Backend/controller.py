@@ -1,6 +1,6 @@
 import json
 from util.productivity import Productivity
-from util.voicemodel import VoiceModel
+from util.voicetotext import VoiceToText
 
 class Controller:
 
@@ -26,5 +26,4 @@ class Controller:
     
     @staticmethod
     def voice():
-        vm = VoiceModel()
-        return vm.get_text_translation()
+        return VoiceToText.voice_to_text()

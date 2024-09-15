@@ -1,46 +1,23 @@
 const { app } = require('electron');
 const EventListener = require('./objects/EventListener');
-const Avatar = require('./objects/Window');
-const iohook = require('iohook');
-
-let avatar1 = null;
+const Avatar = require('./objects/Avatar');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-iohook.on('keydown', (event) => {
-  if (event.keycode === 61000) { // Up arrow key
-    console.log('Up arrow key pressed');
-    avatar1.move('up');
-  } else if (event.keycode === 61008) { // Down arrow key
-    console.log('Down arrow key pressed');
-    avatar1.move('down');
-  } else if (event.keycode === 61003) { // Left arrow key
-    console.log('Left arrow key pressed');
-    avatar1.move('left');
-  } else if (event.keycode === 61005) { // Right arrow key
-    console.log('Right arrow key pressed');
-    avatar1.move('right');
-  }
-});
-
-iohook.start();
-
-
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   console.log('Initalizing avatars');
-  avatar1 = new Avatar();
+  let avatar1 = new Avatar();
   avatar1.make();
   console.log('Avatar created');
 
   console.log('Starting event listener');
-  const eventListener = new EventListener();
+  const eventListener = new EventListener([avatar1]);
   eventListener.start();
   console.log('Event listener started');
 
@@ -51,7 +28,7 @@ app.whenReady().then(() => {
       avatar1.make();
     }
   });
-
+  
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
