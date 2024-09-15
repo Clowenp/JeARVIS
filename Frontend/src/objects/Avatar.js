@@ -4,7 +4,7 @@ const path = require('path');
 // Window Class
 class Avatar{
   constructor(
-    width = 200,
+    width = 400,
     height = 400,
     frame = false,
     transparent = true,

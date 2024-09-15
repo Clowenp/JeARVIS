@@ -1,12 +1,23 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello World!</title>
-    <link rel="stylesheet" href="index.css" />
-  </head>
-  <body>
-    <h1>💖 Hello World!</h1>
-    <p id="welcome">Welcome to your Electron application.</p>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>Virtual Assistant</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: transparent;
+    }
+  </style>
+</head>
+<body>
+  <!-- Load Unity WebGL Content -->
+  <iframe id="unity-frame" src="webgl/index.html" frameborder="0" style="width:100%; height:100%;"></iframe>
+  
+  <!-- Renderer Script -->
+  <script src="renderer.js"></script>
+</body>
 </html>

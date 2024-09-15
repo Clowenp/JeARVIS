@@ -1,4 +1,4 @@
-const { app } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const EventListener = require('./objects/EventListener');
 const Avatar = require('./objects/Avatar');
 
