@@ -3,7 +3,7 @@ import os
 
 class VoiceModel:
 
-    def __init__(self, file_name = "audio.mp3"):
+    def __init__(self, file_name = "audio.wav"):
         self.client = Groq(api_key = os.getenv('GROQ_API_KEY'))
         self.model = 'whisper-large-v3'
         self.filepath = "util/Audio/" + file_name
