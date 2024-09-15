@@ -12,7 +12,7 @@
     npm start
     ```
 
-3. If you encounter a module error with `iohook`, rebuild the module:
+3. If you encounter a module error with `iohook`, rebuild the module:a
     ```sh
     npx electron-rebuild -f -w iohook
     ```
