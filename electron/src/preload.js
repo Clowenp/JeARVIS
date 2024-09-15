@@ -14,5 +14,6 @@ window.addEventListener('DOMContentLoaded', () => {
 contextBridge.exposeInMainWorld('electronAPI', {
   onMousePressed: (callback) => ipcRenderer.on('mouse-pressed', callback),
   // You can expose other APIs as needed
+  onKeyPressed: (key) => ipcRenderer.send('key-pressed', key),
 });
   
