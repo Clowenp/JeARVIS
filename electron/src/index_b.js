@@ -42,10 +42,10 @@ iohook.on('mousemove', (event) => {
   console.log('Mouse move event:', event);
 });
 
-// iohook.on('mousedown', (event) => {
-//   console.log('Mouse down event:', event);
-  //mainWindow.webContents.send('mouse-pressed', event); // Send IPC message
-// });
+iohook.on('mousedown', (event) => {
+  console.log('Mouse down event:', event);
+  mainWindow.webContents.send('mouse-pressed', event); // Send IPC message
+});
 
 // Add keypress detection
 iohook.on('keydown', (event) => {
@@ -56,15 +56,11 @@ iohook.on('keydown', (event) => {
   }
 });
 
-iohook.on('keyup', (event) => {
-  // Trigger 'Reaction' animation in Unity
-  sendMessageToUnity('AnimationController', 'TriggerAnimation', 'Reaction');
-});
-iohook.on('mousedown', (event) => {
-  console.log('Mouse down event detected:', event);
-  
-  // Trigger 'dying' animation in Unity
-  sendMessageToUnity('AnimationController', 'TriggerAnimation', 'Dying');
+// Listen for key press events from renderer.js
+ipcMain.on('key-pressed', (event, key) => {
+  console.log('Key pressed event received in main process:', key);
+  // You can handle the key press event here or forward it to Unity if needed
+  mainWindow.webContents.send('key-pressed', key); // Optional: send it back to renderer
 });
 
 
