@@ -46,6 +46,8 @@ class EventListener {
     this.keyInputs = ''; // Initialize an empty string to store key inputs
     this.state = "LISTENING"; // "LISTENING", "PROCESSING", "AVATAR"
     this.isTrackingMouse = false; // Corrected to 'false'
+    this.recordInterval = 10 * 1000; // 10 seconds
+    this.voiceInterval = 20 * 1000; // 20 seconds
   }
 
   start() {
@@ -54,6 +56,18 @@ class EventListener {
     this.iohook.on('keydown', this.onKeyDown.bind(this));
     this.iohook.on('keyup', this.onKeyUp.bind(this));
     this.iohook.start();
+
+    // Send payload every 5 seconds
+    setInterval(() => {
+      console.log("Sending screenshot");
+      this.sendScreenshot();
+    }, this.recordInterval);
+
+    // Send payload every 10 seconds
+    setInterval(() => {
+      console.log("Sending voice");
+      this.sendVoice();
+    }, this.voiceInterval);
   }
 
   // Define websocket functions
@@ -63,7 +77,7 @@ class EventListener {
   async sendPayload(payload) {
     // Wait until the state is "LISTENING"
     let effectiveLength = this.keyInputs.replace(/<[^>]+>/g, '.').length;
-    if (effectiveLength < 10) {
+    if (effectiveLength < 10 && payload.message === "key_input") {
       return;
     }
     this.keyInputs = ''; // Clear the key inputs
@@ -72,10 +86,23 @@ class EventListener {
       await new Promise(resolve => setTimeout(resolve, 500)); // Wait for 500ms before checking again
     }
     this.state = "PROCESSING";
-    this.ws.sendMessage(JSON.stringify(payload));
+    this.ws.sendMessage(JSON.stringify(payload)); // Ensure payload is stringified
     this.state = "LISTENING";
   }
 
+  async sendScreenshot() {
+    const payload = {
+      message: "screenshot",
+    };
+    await this.sendPayload(payload);
+  }
+
+  async sendVoice() {
+    const payload = {
+      message: "voice",
+    };
+    await this.sendPayload(payload);
+  }
 
   // Define iohook functions
   async onMouseMove(event) {
