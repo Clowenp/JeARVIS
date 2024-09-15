@@ -31,7 +31,7 @@ class Productivity:
     @staticmethod
     def number_extractor(result):
         vf = Voiceflow("1")
-        vf.launch_workflow( {} ).text
+        print(vf.launch_workflow( {"isMock": "False"} ).text)
         res = vf.send_text( {}, result).text
         vf.close_flow().text
         return res

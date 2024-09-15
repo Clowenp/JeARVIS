@@ -6,10 +6,10 @@ const messageParser = (message) => {
 
 let ws = new WebSocketClient("ws://localhost:7890", messageParser)
 
-// setTimeout(() => {
-//   ws.sendMessage(JSON.stringify({"message": "screenshot"}));
-// }, 1000);
+setTimeout(() => {
+  ws.sendMessage(JSON.stringify({"message": "screenshot"}));
+}, 1000);
 
 setTimeout(() => {
   ws.sendMessage(JSON.stringify({"message": "voice"}));
-}, 1000);
+}, 5000);

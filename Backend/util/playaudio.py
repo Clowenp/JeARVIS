@@ -2,6 +2,7 @@ import simpleaudio as sa
 import os
 
 class AudioPlayer:
+    
     @staticmethod
     def play_wav(file_path):
         if not os.path.exists(file_path): # check exists
