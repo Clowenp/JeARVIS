@@ -22,3 +22,13 @@
     npx electron-rebuild -f -w robotjs
     ```
 
+5. If you encounter further errors, ensure that you have `node-gyp` installed:
+    ```sh
+    npm install -g node-gyp
+    ```
+
+6. For Windows users, make sure you have `windows-build-tools` installed:
+    ```sh
+    npm install --global --production windows-build-tools
+    ```
+
