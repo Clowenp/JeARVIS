@@ -32,7 +32,6 @@ class WebSocketClient {
       if (this.parser) {
         try {
           this.parser(message);
-          console.log("Message parsed successfully");
         } catch (error) {
           console.error("Error Running Message Parser: ", error)
         }

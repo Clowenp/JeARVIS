@@ -13,9 +13,8 @@ def begin_server():
         print("Client Connected!")
         try:
             async for message in websocket:
-                print("Recieved message from client: " + message)
                 message = Controller.parse_message(message)
-                await websocket.send(message + " [Message Sent Back from Server]")
+                await websocket.send(message)
         except websockets.exceptions.ConnectionClosed as e:
             print("Client Disconnected")
             print(e)
