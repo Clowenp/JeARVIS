@@ -3,6 +3,7 @@ from groq import Groq
 import base64
 from IPython.display import Image
 from util.voiceflow import Voiceflow
+import json
 
 class Productivity:
     total = 0
@@ -38,7 +39,15 @@ class Productivity:
     def run_productivity():
         result = Productivity.rate_productivity()
         print(result)
-        return Productivity.number_extractor(result)
+        
+        children = json.loads(Productivity.number_extractor(result))
+        children = children[1]["payload"]["slate"]["content"][0]["children"]
+        print("=== children ===")
+        print(children)
+        for child in children:
+            if (child["text"] >= '1' and child["text"] <= '9') or child["text"] == '10':
+                return child["text"]
+        return '5'
 
 
 

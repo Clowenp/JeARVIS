@@ -86,12 +86,3 @@ class Voiceflow:
 
         return requests.delete(self.url[:len(self.url) - 18], headers=headers)
 
-def main():
-    vf = Voiceflow("1")
-    print(vf.launch_workflow( {} ).text)
-    print(vf.send_text( {}, "I'd like to be connected to the head of the sales department for a strategic partnership discussion.").text)
-    # print(vf.send_intent( {}, "I'd like to be connected to the head of the sales department for a strategic partnership discussion.", "" ).text)
-    print(vf.close_flow().text)
-
-if __name__ == "__main__":
-    main()

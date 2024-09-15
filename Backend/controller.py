@@ -1,5 +1,6 @@
 import json
 from util.productivity import Productivity
+from util.voicemodel import VoiceModel
 
 class Controller:
 
@@ -12,6 +13,8 @@ class Controller:
                 return "Connection to Server Established"
             elif command == "screenshot":
                 return Controller.screenshot()
+            elif command == "voice":
+                return Controller.voice()
             else:
                 return "Message is not parsed under Controller Condition!"
         else:
@@ -20,3 +23,8 @@ class Controller:
     @staticmethod
     def screenshot():
         return Productivity.run_productivity()
+    
+    @staticmethod
+    def voice():
+        vm = VoiceModel()
+        return vm.get_text_translation()

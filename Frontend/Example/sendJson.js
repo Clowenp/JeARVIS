@@ -1,9 +1,7 @@
 const WebSocketClient = require('../WebSocketClient');
 
 const messageParser = (message) => {
-    console.log("Called Message Parser");
-    console.log(message)
-    console.log("Called Message Parser End");
+    console.log("messageParser, " + message);
 }
 
 let ws = new WebSocketClient("ws://localhost:7890", messageParser)
@@ -13,5 +11,5 @@ setTimeout(() => {
 }, 1000);
 
 setTimeout(() => {
-  ws.close();
-}, 1000);
+  ws.sendMessage(JSON.stringify({"message": "voice"}));
+}, 4000);
