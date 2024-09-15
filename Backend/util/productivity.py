@@ -21,7 +21,7 @@ class Productivity:
     def rate_productivity():
         client = Groq()
         llava_model = 'llava-v1.5-7b-4096-preview'
-        image_path = 'Screenshots/screenshot.png'
+        image_path = 'util/Screenshots/screenshot.png'
         Image(image_path)
         base64_image = ImageModel.encode_image(image_path)
         return ImageModel.image_to_text(client, llava_model, base64_image, Productivity._PROMPT)
@@ -38,7 +38,7 @@ class Productivity:
     def run_productivity():
         result = Productivity.rate_productivity()
         print(result)
-        print(Productivity.number_extractor(result))
+        return Productivity.number_extractor(result)
 
 
 
