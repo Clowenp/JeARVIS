@@ -4,12 +4,10 @@ from dotenv import load_dotenv
 
 
 class Voiceflow:
-
-
+    
     def __init__(self, userID):
         load_dotenv('.env')
         self.API_KEY = os.getenv('API_KEY')
-        print(self.API_KEY)
         self.url = "https://general-runtime.voiceflow.com/state/user/" + userID + "/interact?logs=off"
 
     def launch_workflow(self, variable_map):

@@ -4,6 +4,7 @@ import base64
 from IPython.display import Image
 from util.voiceflow import Voiceflow
 import json
+from util.screenshot import Screenshot
 
 class Productivity:
     total = 0
@@ -37,6 +38,7 @@ class Productivity:
     
     @staticmethod
     def run_productivity():
+        Screenshot.capture_and_save()
         result = Productivity.rate_productivity()
         print(result)
         
