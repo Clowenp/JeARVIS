@@ -9,7 +9,7 @@ class Avatar{
     frame = false,
     transparent = true,
     alwaysOnTop = true,
-    skipTaskbar = true,
+    skipTaskbar = false,
     icon = path.join(__dirname, '../assets/icon.png')
   ) {
     this.options = {
@@ -91,6 +91,17 @@ class Avatar{
       this.window.setBounds(bounds);
     }
   }
+
+  // Set the window position
+  setPosition(mouseX, mouseY) {
+    if (this.window) {
+      const { width, height } = this.window.getBounds();
+      const x = Math.round(mouseX / 2 - width / 2);
+      const y = Math.round(mouseY / 2);
+      this.setBounds({ x, y, width, height });
+    }
+  }
+
 }
 
 module.exports = Avatar;
